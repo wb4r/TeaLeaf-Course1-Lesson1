@@ -40,8 +40,6 @@ puts "The result is: #{total}"
 
 
 # DOUBTS:
-# => If input1 = 10.5, input2 = 5.5 and calculation = 4 it gives 1.90909
-# If it has converted it to_i hows possible that it still can convert it to_f?
 
 # => If input1 = 6.3, input2 = 6 and calculation = 2 the result is 0.2999999 instead
 # of 0.3
