@@ -12,11 +12,13 @@ puts "Let's play Paper, Rock, Scissors against the Computer!"
 separation()
 
 
-def prs()
+def prs_game()
     
   # Var declarations
   # result meanings --> 1 = User wins  2 = Computer wins   3 = Tie
-  input_user, input_comp, result = true
+  input_user = true
+  input_comp = true
+  result = true
     
   puts "-> Choose an option: P/R/S"
     
@@ -28,8 +30,8 @@ def prs()
     
   # While loop in case the user picks a wrong choice != PRS
   while input_user != 'p' && input_user != 'r' && input_user != 's' do 
-      puts "-> Please choose again. Wrong option."
-      input_user = gets.downcase.chomp
+    puts "-> Please choose again. Wrong option."
+    input_user = gets.downcase.chomp
   end
     
     
@@ -46,12 +48,12 @@ def prs()
     
   # Establishing the RESULT value based on both inputs        
   if input_user == input_comp then result = 3
-      elsif input_user == 'p' && input_comp == 'r' then result = 1
-      elsif input_user == 'p' && input_comp == 's' then result = 2
-      elsif input_user == 'r' && input_comp == 'p' then result = 2
-      elsif input_user == 'r' && input_comp == 's' then result = 1
-      elsif input_user == 's' && input_comp == 'p' then result = 1
-      elsif input_user == 's' && input_comp == 'r' then result = 2
+    elsif input_user == 'p' && input_comp == 'r' then result = 1
+    elsif input_user == 'p' && input_comp == 's' then result = 2
+    elsif input_user == 'r' && input_comp == 'p' then result = 2
+    elsif input_user == 'r' && input_comp == 's' then result = 1
+    elsif input_user == 's' && input_comp == 'p' then result = 1
+    elsif input_user == 's' && input_comp == 'r' then result = 2
   end
     
     
@@ -64,10 +66,10 @@ end
 
 # We put the game (prs()) inside a loop to make it replayable
 while replay == 'y' || replay == 'Y' do
-  prs()
+  prs_game()
   puts "-> Do you want to play again? y/n"
   replay = gets.chomp
   if replay == 'n' then puts "-> Oh..OK. Good Bye boring fella!" end
-    separation()
+  separation()
 end
 

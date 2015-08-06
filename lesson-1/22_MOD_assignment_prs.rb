@@ -13,11 +13,11 @@ puts "Let's play Paper, Rock, Scissors against the Computer!"
 separation()
 
 
-def prs()
+def prs_game()
     
   # Var declarations
-  # result meanings --> 1 = User wins  2 = Computer wins   3 = Tie
-  input_user, input_comp = true
+  input_user = true
+  input_comp = true
     
   puts "-> Choose an option: P/R/S"
     
@@ -29,8 +29,8 @@ def prs()
     
   # While loop in case the user picks a wrong choice != PRS
   while CHOICES.keys.include?(input_user) == false do 
-      puts "-> Please choose again. Wrong option."
-      input_user = gets.downcase.chomp
+    puts "-> Please choose again. Wrong option."
+    input_user = gets.downcase.chomp
   end
     
     
@@ -45,7 +45,7 @@ def prs()
       then puts "---> THE USER WINS!!"
   else puts "---> THE COMPUTER WINS!!" end
   
-  
+  # This is extra. Could go out actually. I was practicing hash.each do |key, value|
   CHOICES.each do |k, v|
     if input_user == k then input_user = CHOICES[k][v] end
     if input_comp == k then input_comp = CHOICES[k][v] end
@@ -57,10 +57,10 @@ end
 
 # We put the game (prs()) inside a loop to make it replayable
 while replay == 'y' || replay == 'Y' do
-  prs()
+  prs_game()
   puts "-> Do you want to play again? y/n"
   replay = gets.chomp
   if replay == 'n' then puts "-> Oh..OK. Good Bye boring fella!" end
-    separation()
+  separation()
 end
 
