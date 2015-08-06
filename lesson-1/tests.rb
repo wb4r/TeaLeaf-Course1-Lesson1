@@ -1,14 +1,17 @@
-def question (quest , ans )
-  1.times do
-    puts quest
-    a = gets.chomp
-    if a == ans
-      puts "good job"
-    else
-      puts "Try Again!"
-      redo
-    end
-  end
-end
 
-question(quest, ans)
+CHOICES = {'p' => 'Paper', 'r' => 'Rock', 's' => 'scissors'}
+var = 'p'
+#def winner(var)
+  
+  CHOICES.each do |k, v|
+    if var == k then var = CHOICES[k][v] end
+  end
+  puts var
+  
+  
+  
+#end  
+
+#winner('p')
+
+#puts CHOICES[var]
