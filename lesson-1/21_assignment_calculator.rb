@@ -13,23 +13,23 @@ calculation = gets.chomp
 
 # Converting to Float if a '.' is detected in the input value
 if input_number1.include?(".") || input_number2.include?(".")
-    input_number1 = input_number1.to_f
-    input_number2 = input_number2.to_f
+  input_number1 = input_number1.to_f
+  input_number2 = input_number2.to_f
 else
-    input_number1 = input_number1.to_i
-    input_number2 = input_number2.to_i
+  input_number1 = input_number1.to_i
+  input_number2 = input_number2.to_i
 end
 
 # Here the result will be calculated based on the calculation option choosen
 case calculation
 when '1'
-    total = input_number1 + input_number2
+  total = input_number1 + input_number2
 when '2'
-    total = input_number1 - input_number2
+  total = input_number1 - input_number2
 when '3'
-    total = input_number1 * input_number2
+  total = input_number1 * input_number2
 when '4'
-    total = input_number1.to_f / input_number2.to_f
+  total = input_number1.to_f / input_number2.to_f
 else
     puts "Please, choose a correct option and try again."
 end
