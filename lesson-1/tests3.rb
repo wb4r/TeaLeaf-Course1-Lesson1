@@ -1,8 +1,13 @@
-control_of_choices = []
+require 'pry'
 
-input = gets.chomp.to_i
+variable = 'O'
 
-control_of_choices << input
+if variable == 'empty'
+    variable = 'X'
+else while variable != 'empty'
+    puts "choose again"; user_hand = gets.chomp.to_i
+    if variable == 'empty' then variable = 'X'; break end
+  end
+end
 
-
-p control_of_choices
+puts variable

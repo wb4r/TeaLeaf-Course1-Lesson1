@@ -1,98 +1,90 @@
 require 'pry'
 # Done without looking at the video solution
-# PENDING: START ALEATORIO USER vs PC
 user_hand = ""
 comp_hand = ""
 board_array = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 board_hash = {1=>"empty", 2=>"empty", 3=>"empty", 4=>"empty", 5=>"empty", 6=>"empty", 7=>"empty", 8=>"empty", 9=>"empty"}
-WINNING_RESULTS = [[1,2,3], [4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [1,5,9], [3,5,7]]
+WINNING_RESULTS = {1=>[1,2,3], 2=>[4,5,6], 3=>[7,8,9], 4=>[1,4,7], 5=>[2,5,8], 6=>[3,6,9], 7=>[1,5,9], 8=>[3,5,7]}
 user_choices = []
-comp_coices = []
+comp_choices = []
+winner = false
 
 
-
-=begin
-#CHECKING WINNER OPTIONS
-
-arr = [[1, 2, 3], [4, 5, 6]]
-
-arr.assoc(1) --> [1, 2, 3] CHECKS 1ST IN ARRAY
-arr.assoc(4) --> [4, 5, 6]
-
-arr.rassoc(2) => [1, 2, 3] CHECKS SECOND IN ARRAY
-arr.rassoc(5) => [4, 5, 6] 
-=end
-
-
-def still_available_numbers?(user_choices, comp_coices, board_array)
-  if (user_choices + comp_coices).sort == board_array then return false else return true end
-end
-
-
-#CHECKING USERS INPUT vs PREVIOUS CHOSEN
+# Checking user inputs vs numbers previously used PC+User
 def checking_user_input(board_hash, user_hand)
-  if board_hash[user_hand] == 'empty'
-    board_hash[user_hand] = 'X'
-  else 
-    while board_hash[user_hand] != 'empty'
-      puts "choose again"
-      user_hand = gets.chomp.to_i
-      if board_hash[user_hand] == 'empty'
-        board_hash[user_hand] = 'X'
-        break
-      end
+  if board_hash[user_hand] == 'empty' then board_hash[user_hand] = 'X'
+  else while board_hash[user_hand] != 'empty'
+      puts "choose again"; user_hand = gets.chomp.to_i
+      if board_hash[user_hand] == 'empty' then board_hash[user_hand] = 'X'; break end
     end
   end
 end
 
-# CHECKING COMP INPUTS vs PREVIOUS CHOSEN
+# Checking computer inputs vs numbers previously used PC+User
 def checking_comp_input(board_hash, comp_hand, board_array)
-  #unless still_available_numbers?(user_choices, comp_coices, board_array) == false
-    if board_hash[comp_hand] == 'empty'
-      board_hash[comp_hand] = 'O'
-    else
-      while board_hash[comp_hand] != 'empty'
-        comp_hand = board_array.sample
-        if board_hash[comp_hand] == 'empty'
-          board_hash[comp_hand] = 'O'
-          break
-        end
-      end
+  if board_hash[comp_hand] == 'empty' then board_hash[comp_hand] = 'O'
+  else while board_hash[comp_hand] != 'empty'
+      comp_hand = board_array.sample
+      if board_hash[comp_hand] == 'empty' then board_hash[comp_hand] = 'O'; break end
     end
-  #end
+  end
 end
 
-# do until SOLUTION or no 'empty'
-until  still_available_numbers?(user_choices, comp_coices, board_array) == false 
+# Loop prevents the game from stoping before condition
+# Condition is ALL NUMBERS used
+# OR
+# Condition is there_is_a_winner
+until  (user_choices + comp_choices).sort == board_array || winner != false
   p board_hash
-  p "user_choices #{user_choices.uniq!}"
-  p "comp_coices #{comp_coices.uniq!}"
+  p "user_choices #{user_choices}"
+  p "comp_choices #{comp_choices}"
   
   user_hand = gets.chomp.to_i
   comp_hand = board_array.sample
   
-  checking_user_input(board_hash, user_hand)
-  checking_comp_input(board_hash, comp_hand, board_array)
-
-  board_hash.each do |number, value|
-    user_choices << number if board_hash[number] =='X'
-    comp_coices << number if board_hash[number] == 'O'
+  # 'if' avoids entering if there are no more numbers available to choose
+  if (user_choices + comp_choices).sort != board_array
+    checking_user_input(board_hash, user_hand)
+    
+    # Adds 'X' to the chosen values array
+    board_hash.each {|number, value| user_choices << number if board_hash[number] =='X'}
+    user_choices.sort!.uniq!
   end
-
-  binding.pry
-
-  # if user_choices + comp_choices merge = board array GAME OVER
-  # if WINNER then GAME OVER
   
+  # 'if' avoids entering if there are no more numbers available to choose
+  if (user_choices + comp_choices).sort != board_array
+    checking_comp_input(board_hash, comp_hand, board_array)
+    
+    # Adds 'O' to the chosen values array
+    board_hash.each {|number, value| comp_choices << number if board_hash[number] == 'O'}
+    comp_choices.sort!.uniq!
+  end
   
-  
-  
-  
-
+  # Each loop this checks for a winner --> CREATE METHOD ?¿
+  WINNING_RESULTS.each do |key, solutions|
+    if WINNING_RESULTS[key] - user_choices == [] 
+      winner = "user" 
+      puts "#{winner} is the winner!"
+    end
+    if WINNING_RESULTS[key] - comp_choices == [] 
+      winner = "computer" 
+      puts "#{winner} is the winner!"
+    end
+  end
 end
 
 
-  puts "mada"
+puts "GAME OVER 110"
+
+
+
+# PENDING: 
+
+# Physical LAYOUT
+# START ALEATORIO USER vs PC
+# IA if chosen closer to x.solution then x.solution > prob in .sample
+
+
 
 
 
@@ -124,17 +116,22 @@ end
 
 
 =begin
-  # CONVERTING FROM HASH 'O' AND 'X' TO ARRAY
 
-  example_hash = {1=>"X", 2=>"X", 3=>"X", 4=>"empty", 5=>"empty", 6=>"empty", 7=>"empty", 8=>"empty", 9=>"empty"}
-  example_array = []
-  
-  # PASS 'X' TO ARRAY
-  example_hash.each do |number, value|
-    example_array << number if example_hash[number] != 'empty'
+
+
+
+#             NOT IN USE
+def jump_when_winner(user_choices, comp_choices, winner)
+  WINNING_RESULTS.each do |key, solutions|
+    if WINNING_RESULTS[key] - user_choices == [] then winner = "user" end
+    if WINNING_RESULTS[key] - comp_choices == [] then winner = "computer" end
   end
-  p example_array
-  
-  p WINNING_RESULTS.assoc(example_array[0])
-  p WINNING_RESULTS.rassoc(example_array[1])
+end
+
+# =>          NOT IN USE
+def still_available_numbers?(user_choices, comp_choices, board_array)
+  if (user_choices + comp_choices).sort!.uniq! == board_array then return false else return true end
+  binding.pry
+end
+
 =end
