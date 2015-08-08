@@ -2,6 +2,7 @@ require 'pry'
 # Done without looking at the video solution
 user_hand = ""
 comp_hand = ""
+comp_hand_source = [1]
 board_array = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 board_hash = {1=>"empty", 2=>"empty", 3=>"empty", 4=>"empty", 5=>"empty", 6=>"empty", 7=>"empty", 8=>"empty", 9=>"empty"}
 WINNING_RESULTS = {1=>[1,2,3], 2=>[4,5,6], 3=>[7,8,9], 4=>[1,4,7], 5=>[2,5,8], 6=>[3,6,9], 7=>[1,5,9], 8=>[3,5,7]}
@@ -22,10 +23,10 @@ end
 
 # Checking computer inputs vs numbers previously used PC+User
 def checking_comp_input(board_hash, comp_hand, board_array)
-  if board_hash[comp_hand] == 'empty' then board_hash[comp_hand] = 'O'
+  if board_hash[comp_hand] == 'empty' then board_hash[comp_hand] = 'O' # COMPUTER IA HERE #########################
   else while board_hash[comp_hand] != 'empty'
       comp_hand = board_array.sample
-      if board_hash[comp_hand] == 'empty' then board_hash[comp_hand] = 'O'; break end
+      if board_hash[comp_hand] == 'empty' then board_hash[comp_hand] = 'O'; break end  # COMPUTER IA HERE ####################
     end
   end
 end
@@ -41,6 +42,7 @@ until  (user_choices + comp_choices).sort == board_array || winner != false
   
   user_hand = gets.chomp.to_i
   comp_hand = board_array.sample
+  # comp_hand = comp_hand_source[0]
   
   # 'if' avoids entering if there are no more numbers available to choose
   if (user_choices + comp_choices).sort != board_array
