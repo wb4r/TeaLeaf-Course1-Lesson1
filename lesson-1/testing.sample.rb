@@ -1,20 +1,15 @@
-a = [[1, 2], [3]]
-b = [4, 5]
 
 
-begin
+a = 2
+var = false
 
-var_a = a.sample
-p "A: #{var_a}"
-p var_a.length
-
-rescue
-var_b = a.sample
-p "B: #{var_b}"
-p var_b.length
-
-rescue
-
-p "C: #{a.sample.sample}"
-
+def mez(var, a)
+  if a == 2 then puts "here" end
+  return true
 end
+
+var = mez(var, a)
+
+
+
+if var == true then puts "madafaca" else puts "no way" end
