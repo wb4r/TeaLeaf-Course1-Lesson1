@@ -13,10 +13,12 @@ combinations_comp_to_win = []
 empty_positions_array = []
 
 
+##############################################################
+
+
 def empty_positions(bh)
   bh.select {|key, value| value == ' ' }.keys
 end
-
 
 
 def playing_board(bh, user_choices, comp_choices, combinations_comp_to_win)
@@ -44,9 +46,11 @@ def winner_alg(winner, user_choices, comp_choices)
   
   
   WINNING_RESULTS.each do |key, solutions|
+    binding.pry
     if WINNING_RESULTS[key] - user_choices == [] 
       return "User" 
       #puts "The User is the winner!"
+      
     elsif WINNING_RESULTS[key] - comp_choices == [] 
       return "Computer" 
       #puts "The Computer is the winner!"
@@ -86,16 +90,20 @@ def computer_input(bh, comp_hand, comp_choices, combinations_comp_to_win)
   comp_hand = empty_positions(bh).sample
   bh[comp_hand] = 'O'
   comp_choices << comp_hand
-  #comp_hand = 'O'
+  comp_hand = 'O'
   
   
-  
+  # PART THAT SUPPLIES THE ABOVE WHEN TRYING I.A.
   #if comp_choices.empty? then comp_hand = empty_positions(bh).sample
   #else
-  #  comp_hand = combinations_comp_to_win.sample
+  #  if combinations_comp_to_win.sample.sample.class == Fixnum
+  #    comp_hand = combinations_comp_to_win.sample.sample
+  #  else
+  #    comp_hand = combinations_comp_to_win.sample
+  #  end
   #end
-  #comp_hand = 'O'
-  
+  #bh[comp_hand] = 'O'
+  #comp_choices << comp_hand
   
   
   
@@ -124,16 +132,19 @@ end
 
 begin 
 
-  
+
   empty_positions_array = empty_positions(bh)
   playing_board(bh, user_choices, comp_choices, combinations_comp_to_win)
   user_input(bh, user_hand, user_choices)
   computer_input(bh, comp_hand, comp_choices, combinations_comp_to_win)
+  
+  #move_to_win(comp_choices, user_choices, combinations_comp_to_win, bh)
+  
   winner_alg(winner, user_choices, comp_choices)
   
   #binding.pry
 ##################################### CODE ADDED NEW FEATURES
-  
+=begin
 def move_to_win(comp_choices, user_choices, combinations_comp_to_win)
     WINNING_RESULTS.each do |key, solutions|
       comp_choices.each_index do |x|
@@ -171,7 +182,7 @@ def move_to_win(comp_choices, user_choices, combinations_comp_to_win)
     end
   end
 end
-  
+=end
 ##################################### END OF NEW FEATURES CODE
   
 =begin
@@ -216,32 +227,4 @@ end until empty_positions(bh).empty? || winner_alg(winner, user_choices, comp_ch
 
 playing_board(bh, user_choices, comp_choices, combinations_comp_to_win)
 puts "GAME OVER!"
-
-
-
-# PENDING: 
-
-# indent
-# clear code out
-# START ALEATORIO USER vs PC
-# IA de mierda..
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

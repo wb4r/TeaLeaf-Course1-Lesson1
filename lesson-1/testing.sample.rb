@@ -1,15 +1,6 @@
 
+a = [[9], [2, 3]]
 
-a = 2
-var = false
+p a 
 
-def mez(var, a)
-  if a == 2 then puts "here" end
-  return true
-end
-
-var = mez(var, a)
-
-
-
-if var == true then puts "madafaca" else puts "no way" end
+p a.index.length.min
