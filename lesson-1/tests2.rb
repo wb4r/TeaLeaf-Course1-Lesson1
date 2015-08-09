@@ -2,13 +2,14 @@ require 'pry'
 # Done without looking at the video solution
 user_hand = ""
 comp_hand = ""
-comp_hand_source = [1]
+#comp_hand_source = [1]
 board_array = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 board_hash = {1=>"empty", 2=>"empty", 3=>"empty", 4=>"empty", 5=>"empty", 6=>"empty", 7=>"empty", 8=>"empty", 9=>"empty"}
 WINNING_RESULTS = {1=>[1,2,3], 2=>[4,5,6], 3=>[7,8,9], 4=>[1,4,7], 5=>[2,5,8], 6=>[3,6,9], 7=>[1,5,9], 8=>[3,5,7]}
 user_choices = []
 comp_choices = []
 winner = false
+combinations_comp_to_win = []
 
 
 # Checking user inputs vs numbers previously used PC+User
@@ -22,13 +23,56 @@ def checking_user_input(board_hash, user_hand)
 end
 
 # Checking computer inputs vs numbers previously used PC+User
-def checking_comp_input(board_hash, comp_hand, board_array)
+def checking_comp_input(board_hash, comp_hand, board_array, comp_choices, combinations_comp_to_win)
+
+
+  if comp_choices == [] then comp_hand = board_array.sample
+    if board_hash[comp_hand] == 'empty' then board_hash[comp_hand] = 'O'
+    else 
+      while board_hash[comp_hand] != 'empty'
+      comp_hand = board_array.sample
+      if board_hash[comp_hand] == 'empty' then board_hash[comp_hand] = 'O'; break end  
+      end
+    end
+    #binding.pry THE 2nd TIME DOES NOT ENTER SO IT READS OK THE 'ELSE'
+  else 
+    
+    if combinations_comp_to_win.sample.class == Fixnum
+      comp_hand = combinations_comp_to_win.sample
+    else 
+      comp_hand = combinations_comp_to_win.sample.sample
+    end
+    if board_hash[comp_hand] == 'empty' then board_hash[comp_hand] = 'O'
+    else binding.pry end
+  end
+  
+=begin
+    begin
+      comp_hand = combinations_comp_to_win.sample
+    rescue
+      comp_hand = combinations_comp_to_win.sample.sample
+    end
+    if board_hash[comp_hand] == 'empty' then board_hash[comp_hand] = 'O'
+    else binding.pry end
+=end
+    
+=begin
+    if combinations_comp_to_win.sample.sample?nil == false
+      comp_hand = combinations_comp_to_win.sample.sample
+    else comp_hand = combinations_comp_to_win.sample
+    end
+  end
+=end
+  
+=begin
   if board_hash[comp_hand] == 'empty' then board_hash[comp_hand] = 'O' # COMPUTER IA HERE #########################
   else while board_hash[comp_hand] != 'empty'
       comp_hand = board_array.sample
       if board_hash[comp_hand] == 'empty' then board_hash[comp_hand] = 'O'; break end  # COMPUTER IA HERE ####################
     end
   end
+=end
+  p "combinations_comp_to_win: #{combinations_comp_to_win}"
 end
 
 # Loop prevents the game from stoping before condition
@@ -41,10 +85,60 @@ until  (user_choices + comp_choices).sort == board_array || winner != false
   p "comp_choices #{comp_choices}"
   
   user_hand = gets.chomp.to_i
-  comp_hand = board_array.sample
-  # comp_hand = comp_hand_source[0]
   
-  # 'if' avoids entering if there are no more numbers available to choose
+  
+  
+  ##################################### CODE ADDED NEW FEATURES
+  
+  
+def move_to_win(comp_choices, user_choices, combinations_comp_to_win)
+
+  WINNING_RESULTS.each do |key, solutions|
+    comp_choices.each_index do |x|
+
+      if WINNING_RESULTS[key].include?(comp_choices[x])
+        combinations_comp_to_win << WINNING_RESULTS[key]
+      end
+    end
+  end
+
+  combinations_comp_to_win.each_index do |x|
+    comp_choices.each_index do |a|
+      if combinations_comp_to_win[x].include?(comp_choices[a])
+        combinations_comp_to_win[x] = combinations_comp_to_win[x] - [comp_choices[a]]
+      end
+    end
+  end
+
+  combinations_comp_to_win.uniq!
+
+  user_choices.each_index do |b|
+    combinations_comp_to_win.each_index do |b|
+      if combinations_comp_to_win[b].include?(user_choices[b])
+        combinations_comp_to_win.delete_at(b)
+      end
+    end
+  end
+
+  2.times do
+  user_choices.each_index do |b|
+    combinations_comp_to_win.each_index do |x|
+      if combinations_comp_to_win[x].include?(user_choices[b])
+        combinations_comp_to_win.delete_at(x)
+      end
+    end
+  end
+  end
+  
+  
+end  
+  
+
+  
+  
+  ##################################### END OF NEW FEATURES CODE
+  
+  # 'if' avoids user entering if there are no more numbers available to choose
   if (user_choices + comp_choices).sort != board_array
     checking_user_input(board_hash, user_hand)
     
@@ -53,9 +147,12 @@ until  (user_choices + comp_choices).sort == board_array || winner != false
     user_choices.sort!.uniq!
   end
   
-  # 'if' avoids entering if there are no more numbers available to choose
+  # 'if' avoids comp entering if there are no more numbers available to choose
   if (user_choices + comp_choices).sort != board_array
-    checking_comp_input(board_hash, comp_hand, board_array)
+    
+    move_to_win(comp_choices, user_choices, combinations_comp_to_win) ###### NF!!!!!!!!!!!!!
+    
+    checking_comp_input(board_hash, comp_hand, board_array, comp_choices, combinations_comp_to_win)
     
     # Adds 'O' to the chosen values array
     board_hash.each {|number, value| comp_choices << number if board_hash[number] == 'O'}
@@ -77,14 +174,14 @@ end
 
 
 puts "GAME OVER 110"
-
+p "user_choices #{user_choices}"
+p "comp_choices #{comp_choices}"
 
 
 # PENDING: 
 
 # Physical LAYOUT
 # START ALEATORIO USER vs PC
-# IA if chosen closer to x.solution then x.solution > prob in .sample
 
 
 

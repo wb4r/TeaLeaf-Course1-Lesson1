@@ -12,7 +12,7 @@ tunnel = []
 WINNING_RESULTS.each do |key, solutions|
   numbers_left_to_win << WINNING_RESULTS[key] - comp_choices - user_choices
 end
-  
+
 WINNING_RESULTS.each do |key, solutions|
   numbers_left_to_win.each_index do |x|
     #tunnel = comp_choices.sort! + numbers_left_to_win[x].sort!
