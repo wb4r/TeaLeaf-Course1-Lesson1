@@ -6,10 +6,9 @@ bh = {1=>" ", 2=>" ", 3=>" ", 4=>" ", 5=>" ", 6=>" ", 7=>" ", 8=>" ", 9=>" "}
 WINNING_RESULTS = {1=>[1,2,3], 2=>[4,5,6], 3=>[7,8,9], 4=>[1,4,7], 5=>[2,5,8], 6=>[3,6,9], 7=>[1,5,9], 8=>[3,5,7]}
 user_choices = []
 comp_choices = []
-winner = nil
+winner = false
 combinations_comp_to_win = []
 empty_positions_array = []
-
 
 ##############################################################
 
@@ -40,11 +39,6 @@ def playing_board(bh, user_choices, comp_choices, combinations_comp_to_win)
 end
 
 
-
-
-
-
-
 def user_input(bh, user_hand, user_choices)
   user_hand = gets.chomp.to_i
   while empty_positions(bh).index(user_hand) == nil
@@ -62,28 +56,23 @@ def computer_input(bh, comp_hand, comp_choices, combinations_comp_to_win)
   comp_hand = 'O'
 end
 
-##############################################################
-def winner_alg(bh)
-  WINNING_RESULTS.each do |key, solutions|
-    binding.pry
-    if bh[solutions[0]] == 'X' and bh[solutions[1]] == 'X' and bh[solutions[2]] == 'X'
-      return true
-    else return false end
-  end
-end
-##############################################################
 
 begin 
-  winner_alg(bh) # TEMPORAL
   empty_positions_array = empty_positions(bh)
   playing_board(bh, user_choices, comp_choices, combinations_comp_to_win)
   user_input(bh, user_hand, user_choices)
   computer_input(bh, comp_hand, comp_choices, combinations_comp_to_win)
-  #winner = winner_alg(bh)
-  #binding.pry
-end until empty_positions(bh).empty? || winner_alg(bh) != false
+  
+  WINNING_RESULTS.each do |key, solutions|
+    if WINNING_RESULTS[key] - user_choices == [] 
+      winner = true
+    elsif WINNING_RESULTS[key] - comp_choices == [] 
+      winner = true
+    end
+  end
+  
+end until empty_positions(bh).empty? || winner == true
 
 
 playing_board(bh, user_choices, comp_choices, combinations_comp_to_win)
 puts "GAME OVER!"
-
