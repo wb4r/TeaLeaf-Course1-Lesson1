@@ -41,27 +41,9 @@ end
 
 
 
-###################################################
 
-def winner_alg(winner, user_choices, comp_choices)
-  #binding.pry
-  WINNING_RESULTS.each do |key, solutions|
-    if WINNING_RESULTS[key] - user_choices == [] 
-      return true
-      
-      #winner = "user" 
-      #puts "#{winner} is the winner!"
-    elsif WINNING_RESULTS[key] - comp_choices == [] 
-      return true
-      #winner = "computer" 
-      #puts "#{winner} is the winner!"
-    else return nil end
-  
-  end
-  
-end
 
-###################################################
+
 
 def user_input(bh, user_hand, user_choices)
   user_hand = gets.chomp.to_i
@@ -80,15 +62,26 @@ def computer_input(bh, comp_hand, comp_choices, combinations_comp_to_win)
   comp_hand = 'O'
 end
 
+##############################################################
+def winner_alg(bh)
+  WINNING_RESULTS.each do |key, solutions|
+    binding.pry
+    if bh[solutions[0]] == 'X' and bh[solutions[1]] == 'X' and bh[solutions[2]] == 'X'
+      return true
+    else return false end
+  end
+end
+##############################################################
 
 begin 
+  winner_alg(bh) # TEMPORAL
   empty_positions_array = empty_positions(bh)
   playing_board(bh, user_choices, comp_choices, combinations_comp_to_win)
   user_input(bh, user_hand, user_choices)
   computer_input(bh, comp_hand, comp_choices, combinations_comp_to_win)
-  winner = winner_alg(winner, user_choices, comp_choices)
+  #winner = winner_alg(bh)
   #binding.pry
-end until empty_positions(bh).empty? || winner != nil
+end until empty_positions(bh).empty? || winner_alg(bh) != false
 
 
 playing_board(bh, user_choices, comp_choices, combinations_comp_to_win)
