@@ -55,7 +55,8 @@ def winner_alg(winner, user_choices, comp_choices)
       return true
       #winner = "computer" 
       #puts "#{winner} is the winner!"
-    else return nil end
+    #else return nil 
+    end
   
   end
   
@@ -88,7 +89,7 @@ begin
   computer_input(bh, comp_hand, comp_choices, combinations_comp_to_win)
   winner = winner_alg(winner, user_choices, comp_choices)
   #binding.pry
-end until empty_positions(bh).empty? || winner != nil
+end until empty_positions(bh).empty? || winner == false 
 
 
 playing_board(bh, user_choices, comp_choices, combinations_comp_to_win)
