@@ -47,9 +47,9 @@ end
 # Computer input + offensive_AI
 def computer_input(players_inputs, comp_hand, comp_choices, next_comp_move)
   if next_comp_move == []
-      comp_hand = empty_positions(players_inputs).sample
+    comp_hand = empty_positions(players_inputs).sample
   else
-      comp_hand = next_comp_move.sample
+    comp_hand = next_comp_move.sample
   end
   players_inputs[comp_hand] = 'O'
   comp_choices << comp_hand
