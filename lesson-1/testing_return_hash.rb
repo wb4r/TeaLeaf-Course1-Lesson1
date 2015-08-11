@@ -39,7 +39,7 @@ p winner
 
 #################
 if winner == true
-  puts true 
+  puts "winner == true is: TRUE" 
 else 
   puts "winner == true is: FALSE"
 end
@@ -50,7 +50,7 @@ end
 if winner != true
   puts "winner != true is: TRUE" 
 else 
-  puts false
+  puts "winner != true is: FALSE"
 end
 
 
@@ -98,3 +98,18 @@ else
 end
 # I am missing something. Winner is not == to anything but 'User', or 'Computer'
 # But anything is true except FALSE and NIL, right?
+
+
+################
+if winner == !!true
+  puts "winner == !!true is: TRUE" 
+elsif winner == !!false 
+  puts false
+end
+
+
+################
+!!winner
+if !!winner == false
+   puts "madafaca"
+end

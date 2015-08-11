@@ -20,7 +20,7 @@ end
 #################
 # Method for testing return with Arrays vs Hashes. Problem came from TTT_Game
 def testing(mother_array, array_one, array_two, winner)
-  mother_array.each_index do |index, array|
+  mother_array.each_index do |index|
     if mother_array[index] - array_one == [] 
       #p "USER #{mother_array[index]}" IF unquoted last winner == false
       return 'User' #IF unquoted last winner == 'User'
